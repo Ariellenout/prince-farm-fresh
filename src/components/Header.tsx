@@ -1,7 +1,8 @@
-import { ShoppingCart, Leaf } from "lucide-react";
+import { ShoppingCart, Leaf, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 
 interface HeaderProps {
   onCartClick: () => void;
@@ -9,10 +10,12 @@ interface HeaderProps {
 
 export const Header = ({ onCartClick }: HeaderProps) => {
   const { totalItems } = useCart();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -58,7 +61,7 @@ export const Header = ({ onCartClick }: HeaderProps) => {
             </button>
           </nav>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
             <Button
               variant="ghost"
               size="icon"
@@ -72,8 +75,53 @@ export const Header = ({ onCartClick }: HeaderProps) => {
                 </Badge>
               )}
             </Button>
+            
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden hover:bg-primary/10 transition-all duration-200 rounded-xl h-12 w-12"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5 text-foreground/70" />
+              ) : (
+                <Menu className="h-5 w-5 text-foreground/70" />
+              )}
+            </Button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-border/50 py-4 animate-fade-in">
+            <nav className="flex flex-col space-y-1">
+              <button
+                onClick={() => scrollToSection('accueil')}
+                className="px-4 py-3 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-200 font-body text-left"
+              >
+                Accueil
+              </button>
+              <button
+                onClick={() => scrollToSection('produits')}
+                className="px-4 py-3 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-200 font-body text-left"
+              >
+                Produits
+              </button>
+              <button
+                onClick={() => scrollToSection('a-propos')}
+                className="px-4 py-3 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-200 font-body text-left"
+              >
+                À propos
+              </button>
+              <button
+                onClick={() => scrollToSection('contact')}
+                className="px-4 py-3 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-200 font-body text-left"
+              >
+                Contact
+              </button>
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );
