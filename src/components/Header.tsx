@@ -16,7 +16,7 @@ export const Header = ({ onCartClick }: HeaderProps) => {
   };
 
   return (
-    <header className="fixed top-0 w-full bg-background/98 backdrop-blur-md z-50 border-b border-border/50 shadow-[0_2px_20px_rgba(0,0,0,0.04)]">
+    <header className="fixed top-0 w-full bg-background z-50 border-b border-border/50 shadow-[0_2px_20px_rgba(0,0,0,0.04)]">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-24">
           <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => scrollToSection('accueil')}>
